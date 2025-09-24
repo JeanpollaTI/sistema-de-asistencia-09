@@ -1,0 +1,7 @@
+.nav-logo-img {
+  width: 70px;       /* Tamaño del logo */
+  height: auto;      /* Mantiene proporción */
+  object-fit: contain; 
+  margin-left: 0;    /* Pegado al borde izquierdo */
+  margin-top: 13px;  /* Ajusta verticalmente si quieres */
+}

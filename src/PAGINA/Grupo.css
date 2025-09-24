@@ -1,0 +1,266 @@
+/* ===================== */
+/* Grupo.js CSS          */
+/* ===================== */
+
+/* Sección principal */
+.grupo-section {
+  margin-top: 12rem; /* más abajo para no chocar con menú */
+  padding: 2rem 1rem;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+}
+
+/* Contenedor de todos los grupos */
+.grupo-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+/* ===================== */
+/* VISTA ADMIN           */
+/* ===================== */
+
+/* Contenedor de botones de admin */
+.grupo-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 3rem; 
+  justify-content: center;
+  margin-top: 1rem; 
+}
+
+/* Botones principales de admin */
+.grupo-actions .btn-main {
+  padding: 12px 25px;
+  background-color: var(--main-color);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.grupo-actions .btn-main:hover {
+  background-color: #b8952c;
+  color: #fff;
+}
+
+/* Lista de grupos admin */
+.grupo-admin ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Rectángulos clicables de grupos */
+.grupos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.grupo-rectangulo {
+  background-color: var(--dark-color-alt);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
+}
+
+.grupo-rectangulo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.grupo-rectangulo button {
+  margin-top: 10px;
+  background-color: var(--main-color);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.grupo-rectangulo button:hover {
+  background-color: #b8952c;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Modal de Crear Grupo */
+.modal-grupo {
+  background-color: var(--dark-color-alt);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  margin-top: 2rem;
+}
+
+.modal-grupo input {
+  padding: 8px;
+  margin: 5px 0;
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.alumnos-section {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.alumnos-section button {
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.modal-buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Detalle de grupo seleccionado */
+.detalle-grupo {
+  background-color: var(--dark-color-alt);
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* ===================== */
+/* VISTA PROFESOR        */
+/* ===================== */
+
+/* Cada tarjeta de grupo para profesor */
+.grupo-card {
+  background-color: var(--dark-color-alt);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.grupo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* Título y descripción de grupo */
+.grupo-card h4 {
+  font-size: var(--h3-font-size);
+  color: var(--main-color);
+  margin-bottom: 10px;
+}
+
+.grupo-card p {
+  color: var(--text-color);
+  font-size: var(--normal-font-size);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Mensaje de no hay grupos */
+.grupo-profesor p {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  margin-top: 3rem;
+  grid-column: 1 / -1;
+}
+
+/* Botones dentro de tarjetas */
+.grupo-card button {
+  background-color: var(--main-color);
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.grupo-card button:hover {
+  background-color: #b8952c;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Contenedor de asistencia */
+.bimestre-section {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.asistencia-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.asistencia-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cuadritos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.cuadrito {
+  width: 18px;
+  height: 18px;
+  background-color: #ccc;
+  border: 1px solid #999;
+  cursor: pointer;
+  text-align: center;
+  line-height: 18px;
+  font-size: 12px;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.cuadrito:hover {
+  background-color: var(--main-color);
+  color: #000;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .grupo-container {
+    grid-template-columns: 1fr;
+    padding-top: 3rem;
+  }
+  .grupo-actions {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+  }
+  .asistencia-grid {
+    flex-direction: column;
+  }
+  .cuadritos {
+    justify-content: flex-start;
+  }
+}

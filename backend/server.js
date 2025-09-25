@@ -37,25 +37,21 @@ app.use("/horario", horarioRouter);
 app.use("/profesores", profesoresRouter);
 
 // ----------------- SERVIR FRONTEND (React build) -----------------
-const frontendPath = path.join(__dirname, "../src/build");
+const frontendPath = path.join(__dirname, "../build"); // <- Ajustado
 app.use(express.static(frontendPath));
 
 // ----------------- CATCH-ALL FRONTEND -----------------
-// Solo redirige rutas que no sean API ni uploads al React build
 app.use((req, res, next) => {
   const apiPrefixes = ["/auth", "/horario", "/profesores", "/uploads"];
   if (!apiPrefixes.some(prefix => req.path.startsWith(prefix))) {
     res.sendFile(path.join(frontendPath, "index.html"));
   } else {
-    next(); // deja que los routers manejen la ruta
+    next();
   }
 });
 
 // ----------------- MONGODB -----------------
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB conectado"))
   .catch((err) => console.log("❌ Error MongoDB:", err));
 

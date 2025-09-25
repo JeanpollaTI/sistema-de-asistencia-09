@@ -17,7 +17,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ----------------- MIDDLEWARE -----------------
-app.use(cors());
+// Evitar error si FRONTEND_URL está vacío o mal
+const frontendURL = process.env.FRONTEND_URL && process.env.FRONTEND_URL !== "" 
+  ? process.env.FRONTEND_URL 
+  : "*";
+
+app.use(cors({
+  origin: frontendURL,
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -25,18 +33,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // ----------------- RUTAS API -----------------
-app.use("/auth", authRouter);           // Registro, login, usuarios/profesores
-app.use("/horario", horarioRouter);     // Módulo de horario
-app.use("/profesores", profesoresRouter); // Administración de profesores
+app.use("/auth", authRouter);
+app.use("/horario", horarioRouter);
+app.use("/profesores", profesoresRouter);
 
 // ----------------- SERVIR FRONTEND (React build) -----------------
-// Si vas a subir frontend y backend juntos en Render:
-const frontendPath = path.join(__dirname, "../frontend/build");
+const frontendPath = path.join(__dirname, "../src/build");
 app.use(express.static(frontendPath));
 
-// Cualquier ruta que no sea API → devolver index.html
+// Cualquier ruta que no sea API → devolver index.html de React
 app.get("*", (req, res) => {
-  if (!req.path.startsWith("/auth") && !req.path.startsWith("/horario") && !req.path.startsWith("/profesores")) {
+  if (
+    !req.path.startsWith("/auth") &&
+    !req.path.startsWith("/horario") &&
+    !req.path.startsWith("/profesores") &&
+    !req.path.startsWith("/uploads")
+  ) {
     res.sendFile(path.join(frontendPath, "index.html"));
   } else {
     res.status(404).json({ msg: "Ruta no encontrada" });

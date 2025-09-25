@@ -11,6 +11,9 @@ import Grupo from "./PAGINA/Grupo";   // 👈 IMPORTAMOS GRUPO
 import "./App.css";
 import logo from "./logo.png";
 
+// ⚡ Cambia esto a la URL de tu backend en producción
+const BASE_URL = "https://tu-backend-en-produccion.com";
+
 function App() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -64,14 +67,14 @@ function App() {
         ? [
             { id: "asistencia", label: "ASISTENCIAS", clickable: true },
             { id: "justificaciones", label: "JUSTIFICACIONES", clickable: true },
-            { id: "grupo", label: "GRUPO", clickable: false }, // 👈 CAMBIO CONTACTO -> GRUPO
+            { id: "grupo", label: "GRUPO", clickable: false },
             { id: "horario", label: "HORARIO GENERAL", clickable: false },
           ]
         : []),
       ...(user?.role === "admin"
         ? [
             { id: "profesores", label: "PROFESORES", clickable: true },
-            { id: "grupo", label: "GRUPO", clickable: false }, // 👈 CAMBIO CONTACTO -> GRUPO
+            { id: "grupo", label: "GRUPO", clickable: false },
             { id: "horario", label: "HORARIO GENERAL", clickable: false },
           ]
         : []),
@@ -92,7 +95,7 @@ function App() {
               ) : sec.id === "grupo" ? (
                 <button
                   className="nav-button nav-link-button"
-                  onClick={() => navigate("/grupo")} // 👈 REDIRECCIÓN A GRUPO
+                  onClick={() => navigate("/grupo")}
                 >
                   {sec.label}
                 </button>
@@ -134,8 +137,8 @@ function App() {
               <img
                 src={
                   user.foto
-                    ? `http://localhost:5000${user.foto.startsWith("/") ? "" : "/"}${user.foto}`
-                    : "http://localhost:5000/uploads/fotos/default.png"
+                    ? `${BASE_URL}${user.foto.startsWith("/") ? "" : "/"}${user.foto}`
+                    : `${BASE_URL}/uploads/fotos/default.png`
                 }
                 alt="Perfil"
                 className="profile-img-small"
@@ -208,7 +211,7 @@ function App() {
         />
         <Route
           path="/grupo"
-          element={user ? <Grupo user={user} /> : <Navigate to="/login" />} // 👈 RUTA NUEVA
+          element={user ? <Grupo user={user} /> : <Navigate to="/login" />}
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

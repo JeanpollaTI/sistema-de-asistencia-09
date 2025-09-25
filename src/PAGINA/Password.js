@@ -11,6 +11,7 @@ function Password() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const handleSendToken = async (e) => {
     e.preventDefault();
@@ -18,7 +19,7 @@ function Password() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:5000/auth/forgot-password", {
+      const res = await fetch(`${API_BASE}/auth/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -40,7 +41,7 @@ function Password() {
     setMessage("");
 
     try {
-      const res = await fetch("http://localhost:5000/auth/reset-password", {
+      const res = await fetch(`${API_BASE}/auth/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, token, newPassword }),

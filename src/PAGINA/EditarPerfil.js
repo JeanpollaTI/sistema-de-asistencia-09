@@ -56,6 +56,7 @@ function EditarPerfil({ user, setUser }) {
 
     const { nombre, edad, email, celular } = formData;
 
+    // Validaciones básicas
     if (!nombre || !edad || !email || !celular) return setError("Todos los campos son obligatorios.");
     if (Number(edad) <= 0) return setError("La edad ingresada no es válida.");
     if (!/^\S+@\S+\.\S+$/.test(email)) return setError("El correo electrónico ingresado no es válido.");

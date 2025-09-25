@@ -12,6 +12,9 @@ function Home({ user, handleNavClick }) {
   const [asignaturasSelect, setAsignaturasSelect] = useState([]);
   const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
 
+  // Cambia aquí a tu URL del backend en Render
+  const BASE_URL = "https://sistema-de-asistencia-09.onrender.com";
+
   const materias = [
     "MATEMATICAS COOR.ACADEMICA",
     "TUTORIA",
@@ -75,7 +78,7 @@ function Home({ user, handleNavClick }) {
     if (!token) return console.error("⚠️ No hay token guardado.");
 
     axios
-      .get("http://localhost:5000/auth/profesores", {
+      .get(`${BASE_URL}/auth/profesores`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setProfesores(res.data || []))
@@ -97,9 +100,9 @@ function Home({ user, handleNavClick }) {
   };
 
   const profileImgUrl = (foto) => {
-    if (!foto) return "http://localhost:5000/uploads/fotos/default.png";
+    if (!foto) return `${BASE_URL}/uploads/fotos/default.png`;
     if (foto.startsWith("http")) return foto;
-    return `http://localhost:5000${foto}`;
+    return `${BASE_URL}${foto}`;
   };
 
   const handleAsignaturasChange = (materia) => {
@@ -114,7 +117,7 @@ function Home({ user, handleNavClick }) {
 
     axios
       .put(
-        `http://localhost:5000/profesores/${selectedProfesor._id}/asignaturas`,
+        `${BASE_URL}/auth/profesores/${selectedProfesor._id}/asignaturas`,
         { asignaturas: asignaturasSelect },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -132,7 +135,7 @@ function Home({ user, handleNavClick }) {
     const token = localStorage.getItem("token");
 
     axios
-      .delete(`http://localhost:5000/profesores/${selectedProfesor._id}`, {
+      .delete(`${BASE_URL}/auth/profesores/${selectedProfesor._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {

@@ -7,9 +7,11 @@ function Perfil({ user, setUser, onLogout }) {
 
   if (!user) return null;
 
+  // URL de la foto usando variable de entorno
+  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const profileImgUrl = user.foto
-    ? `http://localhost:5000${user.foto}`
-    : `http://localhost:5000/uploads/fotos/default.png`;
+    ? `${API_BASE}${user.foto.startsWith("/") ? "" : "/"}${user.foto}`
+    : `${API_BASE}/uploads/fotos/default.png`;
 
   const handleEdit = () => navigate("/editar-perfil");
 
@@ -29,8 +31,12 @@ function Perfil({ user, setUser, onLogout }) {
         </div>
 
         <div className="perfil-buttons">
-          <button className="btn-edit" onClick={handleEdit}>EDITAR PERFIL</button>
-          <button className="btn-logout" onClick={onLogout}>CERRAR SESIÓN</button>
+          <button className="btn-edit" onClick={handleEdit}>
+            EDITAR PERFIL
+          </button>
+          <button className="btn-logout" onClick={onLogout}>
+            CERRAR SESIÓN
+          </button>
         </div>
       </div>
     </div>

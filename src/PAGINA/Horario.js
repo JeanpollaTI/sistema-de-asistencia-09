@@ -17,6 +17,8 @@ const paletaColores = [
 ];
 
 function Horario({ user }) {
+  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
   const [profesores, setProfesores] = useState([]);
   const [horario, setHorario] = useState({});
   const [anio, setAnio] = useState("2025-2026");
@@ -36,34 +38,32 @@ function Horario({ user }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    axios.get("http://localhost:5000/auth/profesores", {
+    axios.get(`${API_BASE}/auth/profesores`, {
       headers: { Authorization: `Bearer ${token}` }
     }).then(res => {
       if (Array.isArray(res.data)) setProfesores(res.data);
     }).catch(console.error);
-  }, []);
+  }, [API_BASE]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
-    axios.get(`http://localhost:5000/horario/${anio}`, {
+    axios.get(`${API_BASE}/horario/${anio}`, {
       headers: { Authorization: `Bearer ${token}` }
     }).then(res => {
       if (res.data?.datos) setHorario(res.data.datos);
       if (res.data?.leyenda) setLeyenda(res.data.leyenda);
       if (res.data?.pdfUrl) setPdfHorario(res.data.pdfUrl);
     }).catch(console.error);
-  }, [anio, profesores]);
+  }, [anio, profesores, API_BASE]);
 
   const generarHorarioVacio = () => {
     const nuevoHorario = {};
     profesores.forEach(prof => {
       nuevoHorario[prof.nombre] = {};
-      dias.forEach(d => {
-        horas.forEach(h => {
-          nuevoHorario[prof.nombre][`General-${d}-${h}`] = { text: "", color: "transparent" };
-        });
-      });
+      dias.forEach(d => horas.forEach(h => {
+        nuevoHorario[prof.nombre][`General-${d}-${h}`] = { text: "", color: "transparent" };
+      }));
     });
     setHorario(nuevoHorario);
     mostrarAlerta("Horario limpiado correctamente ✅", "success");
@@ -188,7 +188,7 @@ function Horario({ user }) {
       formData.append("datos", JSON.stringify(horario));
       formData.append("leyenda", JSON.stringify(leyenda));
 
-      const res = await axios.post("http://localhost:5000/horario", formData, {
+      const res = await axios.post(`${API_BASE}/horario`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
@@ -215,7 +215,7 @@ function Horario({ user }) {
 
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.post("http://localhost:5000/horario", formData, {
+      const res = await axios.post(`${API_BASE}/horario`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
@@ -233,7 +233,7 @@ function Horario({ user }) {
     return (
       <div className="pdf-viewer-full" style={{ position: "fixed", top: "60px", left: 0, right: 0, bottom: 0, overflow: "auto", backgroundColor: "#fff" }}>
         <embed
-          src={`http://localhost:5000${pdfHorario}#toolbar=0&navpanes=0&scrollbar=0`}
+          src={`${API_BASE}${pdfHorario}#toolbar=0&navpanes=0&scrollbar=0`}
           type="application/pdf"
           width="100%"
           height="100%"

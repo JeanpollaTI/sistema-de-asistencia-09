@@ -8,6 +8,7 @@ function Login({ onLogin }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ function Login({ onLogin }) {
     try {
       console.log("Enviando login:", { identifier, password });
 
-      const res = await fetch("http://localhost:5000/auth/login", {
+      const res = await fetch(`${API_BASE}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

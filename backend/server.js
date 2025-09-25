@@ -17,9 +17,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ----------------- MIDDLEWARE -----------------
-// Evitar error si FRONTEND_URL está vacío o mal
-const frontendURL = process.env.FRONTEND_URL && process.env.FRONTEND_URL !== "" 
-  ? process.env.FRONTEND_URL 
+const frontendURL = process.env.FRONTEND_URL && process.env.FRONTEND_URL !== ""
+  ? process.env.FRONTEND_URL
   : "*";
 
 app.use(cors({
@@ -41,17 +40,14 @@ app.use("/profesores", profesoresRouter);
 const frontendPath = path.join(__dirname, "../src/build");
 app.use(express.static(frontendPath));
 
-// Cualquier ruta que no sea API → devolver index.html de React
-app.get("*", (req, res) => {
-  if (
-    !req.path.startsWith("/auth") &&
-    !req.path.startsWith("/horario") &&
-    !req.path.startsWith("/profesores") &&
-    !req.path.startsWith("/uploads")
-  ) {
+// ----------------- CATCH-ALL FRONTEND -----------------
+// Solo redirige rutas que no sean API ni uploads al React build
+app.use((req, res, next) => {
+  const apiPrefixes = ["/auth", "/horario", "/profesores", "/uploads"];
+  if (!apiPrefixes.some(prefix => req.path.startsWith(prefix))) {
     res.sendFile(path.join(frontendPath, "index.html"));
   } else {
-    res.status(404).json({ msg: "Ruta no encontrada" });
+    next(); // deja que los routers manejen la ruta
   }
 });
 
